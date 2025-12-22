@@ -26,6 +26,13 @@ function MainContent() {
     </main>
   );
 }
+function Footer() {
+  return (
+    <footer style={{ textAlign: 'center', marginTop: '50px' }}>
+      <p>Tous droits réservés - Hiba Hmadad</p>
+    </footer>
+  );
+}
 function App() {
   const [count, setCount] = useState(0);
 
