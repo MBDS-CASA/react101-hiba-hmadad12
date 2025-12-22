@@ -1,119 +1,22 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import MainContent from './assets/components/MainContent';
-import './App.css';
 
-function Header() {
-  return (
-    <header style={{ textAlign: 'center', marginBottom: '20px' }}>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Introduction à React</h1>
-      <h2>A la découverte des premières notions de React</h2>
-    </header>
-  );
-}
-// function MainContent() {
-//   return (
-//     <main style={{ textAlign: 'center', margin: '20px 0' }}>
-//       <p>Ici, nous afficherons des informations interessantes </p>
-//     </main>
-//   );
-// }
-function Footer() {
-  const annee = new Date().getFullYear();
-  return (
-    <footer style={{ textAlign: 'center', marginTop: '50px' }}>
-      <p>© {annee} - Hiba.Hmadad, Tous droits réservés.</p>
-    </footer>
-  );
-}
+import { useState } from 'react'
+import './App.css'
 
+
+import Header from './components/Header.jsx';
+import MainContent from './components/MainContent.jsx';
+import Footer from './components/Footer.jsx';
+import RandomNote from "./components/RandomNote.jsx";
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
       <Header />
-      <div className="card" style={{ textAlign: 'center' }}>
-        <button onClick={() => setCount(count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
       <MainContent />
+      <RandomNote />
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
-
-
-
-// import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
-// import MainContent from './components/MainContent';
-// import './App.css';
-
-// function Header() {
-//   return (
-//     <header style={{ textAlign: 'center', marginBottom: '20px' }}>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Introduction à React</h1>
-//       <h2>A la découverte des premières notions de React</h2>
-//     </header>
-//   );
-// }
-// // function MainContent() {
-// //   return (
-// //     <main style={{ textAlign: 'center', margin: '20px 0' }}>
-// //       <p>Ici, nous afficherons des informations interessantes </p>
-// //     </main>
-// //   );
-// // }
-// function Footer() {
-//   return (
-//     <footer style={{ textAlign: 'center', marginTop: '50px' }}>
-//       <p>Tous droits réservés - Hiba Hmadad</p>
-//     </footer>
-//   );
-// }
-// function App() {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <>
-//       <Header />
-//       <div className="card" style={{ textAlign: 'center' }}>
-//         <button onClick={() => setCount(count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <MainContent />
-//       <Footer />
-//     </>
-//   );
-// }
-
-// export default App;
+export default App
