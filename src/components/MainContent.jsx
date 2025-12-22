@@ -27,15 +27,15 @@ function MainContent({ activeMenu }) {
   const renderContent = () => {
     switch(activeMenu) {
       case "Notes":
-        return <NotesTable />;
+        return <NotesTable key="notes" />;
       case "Etudiants":
-        return <EtudiantsTable />;
+        return <EtudiantsTable key="etudiants" />;
       case "Matières":
-        return <MatieresTable />;
+        return <MatieresTable key="matieres" />;
       case "A propos":
-        return <AProposContent />;
+        return <AProposContent key="apropos" />;
       default:
-        return <NotesTable />;
+        return <NotesTable key="notes" />;
     }
   };
 
@@ -57,7 +57,7 @@ function MainContent({ activeMenu }) {
         </p>
       </div>
       
-      {/* Contenu */}
+      {/* Contenu avec animation */}
       {renderContent()}
     </main>
   );
