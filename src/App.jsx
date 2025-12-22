@@ -22,7 +22,7 @@ function Header() {
 function MainContent() {
   return (
     <main style={{ textAlign: 'center', margin: '20px 0' }}>
-      <p>Ici, nous afficherons des informations interessantes :)</p>
+      <p>Ici, nous afficherons des informations interessantes </p>
     </main>
   );
 }
@@ -47,6 +47,8 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
+      <MainContent />
+      <Footer />
     </>
   );
 }
