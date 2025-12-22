@@ -19,7 +19,13 @@ function Header() {
     </header>
   );
 }
-
+function MainContent() {
+  return (
+    <main style={{ textAlign: 'center', margin: '20px 0' }}>
+      <p>Ici, nous afficherons des informations interessantes :)</p>
+    </main>
+  );
+}
 function App() {
   const [count, setCount] = useState(0);
 
