@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import RandomNote from './RandomNote.jsx';
+import NotesTable from './NotesTable.jsx';
+import EtudiantsTable from './EtudiantsTable.jsx';
+import MatieresTable from './MatieresTable.jsx';
+import AProposContent from './AProposContent.jsx';
 
 function MainContent({ activeMenu }) {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -24,23 +27,37 @@ function MainContent({ activeMenu }) {
   const renderContent = () => {
     switch(activeMenu) {
       case "Notes":
-        return <RandomNote />;
+        return <NotesTable />;
       case "Etudiants":
-        return <h2 style={{ color: 'white', padding: '40px' }}>Etudiants</h2>;
+        return <EtudiantsTable />;
       case "Matières":
-        return <h2 style={{ color: 'white', padding: '40px' }}>Matières</h2>;
+        return <MatieresTable />;
       case "A propos":
-        return <h2 style={{ color: 'white', padding: '40px' }}>A propos</h2>;
+        return <AProposContent />;
       default:
-        return <RandomNote />;
+        return <NotesTable />;
     }
   };
 
   return (
-    <main style={{ textAlign: 'center', margin: '20px 0' }}>
-      <p style={{ color: '#888' }}>
-        Bonjour, on est le {jour}, {moisNom}, {annee} et il est {heure}:{minute}:{seconde}
-      </p>
+    <main style={{ padding: '20px' }}>
+      {/* Date centrée */}
+      <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <p style={{ 
+          color: '#888', 
+          background: 'rgba(97, 218, 251, 0.05)',
+          border: '1px solid rgba(97, 218, 251, 0.1)',
+          borderRadius: '8px',
+          padding: '12px 24px',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+          display: 'inline-block'
+        }}>
+          Bonjour, on est le {jour}, {moisNom}, {annee} et il est {heure}:{minute}:{seconde}
+        </p>
+      </div>
+      
+      {/* Contenu */}
       {renderContent()}
     </main>
   );
