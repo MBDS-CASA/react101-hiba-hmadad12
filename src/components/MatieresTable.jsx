@@ -9,14 +9,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
+import Button from '@mui/material/Button';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import data from '../data/data.json';
+import Modal from './Modal';
 
 function MatieresTable() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const rowsPerPage = 10;
 
   // Extraire la liste unique des matières avec statistiques
@@ -101,6 +105,28 @@ function MatieresTable() {
       : <ArrowDownwardIcon style={{ fontSize: 18, color: '#61dafb' }} />;
   };
 
+  const handleOpenModal = (course) => {
+    setSelectedCourse(course);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedCourse(null);
+  };
+
+  const getCourseStudents = () => {
+    if (!selectedCourse) return [];
+    return data
+      .filter(row => row.course === selectedCourse.name)
+      .map(row => ({
+        student: `${row.student.firstname} ${row.student.lastname}`,
+        id: row.student.id,
+        grade: row.grade,
+        date: row.date
+      }));
+  };
+
   return (
     <div className="content-fade-in">
       {/* Barre de recherche */}
@@ -132,6 +158,7 @@ function MatieresTable() {
       </div>
 
       {/* Tableau */}
+              <TableCell>Action</TableCell>
       <TableContainer component={Paper} sx={{ maxWidth: 800, margin: 'auto' }}>
         <Table sx={{ minWidth: 500 }} aria-label="matieres table">
           <TableHead>
@@ -170,7 +197,22 @@ function MatieresTable() {
                     {course.name}
                   </TableCell>
                   <TableCell align="right">{course.count}</TableCell>
-                  <TableCell align="right">{course.average}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => handleOpenModal(course)}
+                      sx={{
+                        backgroundColor: '#61dafb',
+                        color: '#000',
+                        '&:hover': {
+                          backgroundColor: '#4aa8cc'
+                        }
+                      }}
+                    >
+                      Voir les notes
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))
             )}
@@ -193,6 +235,20 @@ function MatieresTable() {
       <p style={{ textAlign: 'center', color: '#888', marginTop: '20px', fontSize: '14px' }}>
         Affichage de {startIndex + 1} à {Math.min(startIndex + rowsPerPage, filteredData.length)} sur {filteredData.length} résultat(s)
       </p>
+
+      {/* Modal */}
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        title={selectedCourse ? `Notes de ${selectedCourse.name}` : 'Détails'}
+        data={getCourseStudents()}
+        columns={[
+          { key: 'student', label: 'Étudiant' },
+          { key: 'id', label: 'ID' },
+          { key: 'grade', label: 'Note' },
+          { key: 'date', label: 'Date' }
+        ]}
+      />
     </div>
   );
 }

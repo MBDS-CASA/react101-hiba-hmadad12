@@ -9,14 +9,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
+import Button from '@mui/material/Button';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import data from '../data/data.json';
+import Modal from './Modal';
 
 function NotesTable() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
   const rowsPerPage = 10;
 
   // Fonction de tri
@@ -93,6 +97,27 @@ function NotesTable() {
       : <ArrowDownwardIcon style={{ fontSize: 18, color: '#61dafb' }} />;
   };
 
+  const handleOpenModal = (student) => {
+    setSelectedStudent(student);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedStudent(null);
+  };
+
+  const getStudentCourses = () => {
+    if (!selectedStudent) return [];
+    return data
+      .filter(row => row.student.id === selectedStudent.id)
+      .map(row => ({
+        course: row.course,
+        grade: row.grade,
+        date: row.date
+      }));
+  };
+
   return (
     <div className="content-fade-in">
       {/* Barre de recherche */}
@@ -156,12 +181,10 @@ function NotesTable() {
                   <SortIcon column="date" />
                 </div>
               </TableCell>
-              <TableCell align="right" onClick={() => handleSort('grade')}>
-                <div className="sortable-header">
-                  Note
-                  <SortIcon column="grade" />
-                </div>
+              <TableCell align="right">
+                Note
               </TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -177,10 +200,45 @@ function NotesTable() {
                   <TableCell component="th" scope="row">
                     {row.course}
                   </TableCell>
-                  <TableCell>{row.student.firstname} {row.student.lastname}</TableCell>
+                  <TableCell>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      {row.student.firstname} {row.student.lastname}
+                      <Button
+                        variant="text"
+                        size="small"
+                        onClick={() => handleOpenModal(row.student)}
+                        sx={{
+                          color: '#61dafb',
+                          minWidth: '30px',
+                          padding: '2px',
+                          '&:hover': {
+                            backgroundColor: 'rgba(97, 218, 251, 0.1)'
+                          }
+                        }}
+                      >
+                        📋
+                      </Button>
+                    </div>
+                  </TableCell>
                   <TableCell>{row.student.id}</TableCell>
                   <TableCell>{row.date}</TableCell>
                   <TableCell align="right">{row.grade}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => handleOpenModal(row.student)}
+                      sx={{
+                        backgroundColor: '#61dafb',
+                        color: '#000',
+                        '&:hover': {
+                          backgroundColor: '#4aa8cc'
+                        }
+                      }}
+                    >
+                      Détails
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))
             )}
@@ -204,6 +262,19 @@ function NotesTable() {
       <p style={{ textAlign: 'center', color: '#888', marginTop: '20px', fontSize: '14px' }}>
         Affichage de {startIndex + 1} à {Math.min(startIndex + rowsPerPage, filteredData.length)} sur {filteredData.length} résultat(s)
       </p>
+
+      {/* Modal */}
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        title={selectedStudent ? `Matières de ${selectedStudent.firstname} ${selectedStudent.lastname}` : 'Détails'}
+        data={getStudentCourses()}
+        columns={[
+          { key: 'course', label: 'Matière' },
+          { key: 'grade', label: 'Note' },
+          { key: 'date', label: 'Date' }
+        ]}
+      />
     </div>
   );
 }

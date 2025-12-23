@@ -85,7 +85,7 @@ header img,
 header svg {
   width: 100px;
   height: 100px;
-  animation: logo-spin 20s linear infinite;
+  /*animation: logo-spin 20s linear infinite;*/
   filter: drop-shadow(0 0 20px rgba(97, 218, 251, 0.5));
 }
 
@@ -144,6 +144,21 @@ h2 {
   outline: none;
   border-color: #61dafb;
   box-shadow: 0 0 20px rgba(97, 218, 251, 0.3);
+}
+
+/* ============================================
+   CONTENEUR PRINCIPAL (MAIN)
+   ============================================ */
+main {
+  padding: 40px 20px;
+  min-height: calc(100vh - 400px);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Animation d'entrée pour les tableaux */
+main > div {
+  animation: fadeInUp 0.5s ease-out;
 }
 
 /* ============================================
